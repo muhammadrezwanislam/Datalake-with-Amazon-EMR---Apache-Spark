@@ -1,4 +1,4 @@
-<img src ="Images/apacje_spark_logo.png" width="33%" align="right" alt="" title="logo" />
+<img src ="Images/apache_spark_logo.png" width="33%" align="right" alt="" title="logo" />
 
 ### Udacity Data Engineering Nanodegree
 #Project 4: Data Lakes with Apache Spark 
@@ -52,7 +52,7 @@ The log files in the dataset you'll be working with are partitioned by year and 
 
 Below is an example of what the data in a log file, `2018-11-12-events.json`, looks like.
 
-<img src="images/log-data-sample.png" width="100%" align="top-left" alt="" title="Log Data Sample" />
+<img src="Images/log-data-sample.png" width="100%" align="top-left" alt="" title="Log Data Sample" />
 
 You can find all the zipped data in the [data folder](data). You might as well extract it to your working
 directory as it will be required in a further step. 
@@ -65,7 +65,7 @@ directory as it will be required in a further step.
 
 We have designed the following Star Schema after analyzing both the song data and log data. [Note: Field in bold are the partition keys] 
 
-<img src="images/Database ER diagram (crow's foot).1.0.png" width="100%" alt="" title="Schema" />
+<img src="Images/Database ER diagram (crow's foot).1.0.png" width="100%" alt="" title="Schema" />
 
 
 
@@ -92,7 +92,7 @@ a)Type of Storage b) the processing engine and c) AWS-Managed solution or a Vend
 
 In this project, we will be using the **dotted red line** : **Processing Engine: Apache Spark, Managed solution: Amazon EMR, and Storage Type: S3.** Here is a depiction of the options:  
 
-<img src="images/datalakeoptions.png" width="100%" alt="" title="datalakeoptions" />
+<img src="Images/datalakeoptions.png" width="100%" alt="" title="datalakeoptions" />
 
 * **Lake Storage**: S3
 * **Lake Processing**: Spark 
@@ -102,7 +102,7 @@ In this project, we will be using the **dotted red line** : **Processing Engine:
 
 The **blue dotted line** represents the scope and workflow of this project.
 
-<img src="images/focus.png" width="100%" alt="" title="focus" />
+<img src="Images/focus.png" width="100%" alt="" title="focus" />
 
 ##### &nbsp;
 
@@ -160,7 +160,7 @@ ssh hadoop@ec2-###-##-##-###.compute-1.amazonaws.com -i ~/mykeypair.pem
 ```
 If you are successful, you will get a terminal something like this: 
 
-<img src="images/ssh-emr.png" width="100%" alt="" title="ssh master node" />
+<img src="Images/ssh-emr.png" width="100%" alt="" title="ssh master node" />
 
 ##### &nbsp;
 
@@ -221,15 +221,15 @@ Congratulations, you just deployed an ETL pipeline with Spark. Remember to delet
 ## Results 
 If everything goes smooth, you should get the following folders in your s3 Bucket: 
 
-<img src="images/results_one.png" width="100%" alt="" title="output file" />
+<img src="Images/results_one.png" width="100%" alt="" title="output file" />
 
 Also, each of the folder should have .parquet files
 
-<img src="images/users.png" width="100%" alt="" title="users" />
-<img src="images/artists.png" width="100%" alt="" title="artists" />
-<img src="images/time.png" width="100%" alt="" title="time" />
-<img src="images/songplays.png" width="100%" alt="" title="songplays" />
-<img src="images/songs.png" width="100%" alt="" title="songs" />
+<img src="Images/users.png" width="100%" alt="" title="users" />
+<img src="Images/artists.png" width="100%" alt="" title="artists" />
+<img src="Images/time.png" width="100%" alt="" title="time" />
+<img src="Images/songplays.png" width="100%" alt="" title="songplays" />
+<img src="Images/songs.png" width="100%" alt="" title="songs" />
 ##### &nbsp;
 
 ## Sample Queries 
@@ -253,7 +253,7 @@ top_users_df = spark.sql(query).toPandas()
 ```
 
 
-<img src="images/query_one.png" width="100%" alt="" title="Sample Query"/>
+<img src="Images/query_one.png" width="100%" alt="" title="Sample Query"/>
 
 
 ## Running the project in Google Colab for testing
