@@ -10,15 +10,11 @@
 Sparkify, a music streaming app startup, wants to leverage songs and user data that they have been collecting from the app by analyzing and finding relevant patterns. In particular, the analytics team wants to know what are the songs that the users are listening to. However, within the current setup, it is difficult to make sense of the data. In recent times, the app has grown its user base as well as song database and want to move their processes and data onto the cloud. Up until now, their data resides in Amazon s3 Bucket, in directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app, which is not suitable for quering at all. 
 
 ##### &nbsp;
-
-
 ## Goal
 
 The goal of this project is to create an ETL pipeline that extracts data from S3, stages and processes them using Apache Spark, and transforms data into a set of dimensional tables and loads them back to S3 for the analytics team to continue finding insights in what songs their users are listening to.
 
 ##### &nbsp;
-
-
 ## Project Scope
 
 ### Datasets
@@ -57,8 +53,6 @@ directory as it will be required in a further step.
 
 
 ##### &nbsp;
-
-
 ## Schema Design 
 
 We have designed the following Star Schema after analyzing both the song data and log data. [Note: Field in bold are the partition keys] 
@@ -78,10 +72,7 @@ We have designed the following Star Schema after analyzing both the song data an
 * **data**: A sample of song_data and log_data saved locally for testing before going to S3.
 * **images**: Images used for this readme file
 
-
 ##### &nbsp;
-
-
 
 ## Technology 
 
@@ -142,11 +133,11 @@ The cluster will take around 15 minutes to start. Once it is working, you must c
 Security groups act as virtual firewalls to control inbound and outbound traffic to EMR cluster. Using AWS web-interface, find the security group your `master` node is referring to and grant inbound access from
 your IP at port 22. This is a two step process. 
 
-Step 1: Keep ssh session alive [keep ssh session alive](https://stackoverflow.com/questions/25084288/keep-ssh-session-alive)
+**Step 1:** Keep ssh session alive [keep ssh session alive](https://stackoverflow.com/questions/25084288/keep-ssh-session-alive)
 
-Step 2: Authorize Inbound Traffic [Authorize Inbound Traffic] (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-ssh-prereqs.html)
+**Step 2:** Authorize Inbound Traffic [Authorize Inbound Traffic](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-ssh-prereqs.html)
 
-Step 3: Connect to the Master Node Using SSH [Connect to the Master Node Using SSH] (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-ssh.html). 
+**Step 3:** Connect to the Master Node Using SSH [Connect to the Master Node Using SSH](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-ssh.html). 
 
 Remember to use this following command: 
 ```
@@ -170,7 +161,7 @@ Make sure that both of the are copied to the master node. Now, in the terminal w
 spark-submit etl.py
 ```
 
-* **Troubleshooting Tips: ** The elt.py file is written in python 3.x whereas for Amazon EMR release versions 4.6.0-5.19.0: Python 3.4 is installed on the cluster instances but Python 2.7 is the system default. To solve this issue, please go to [How do I configure Amazon EMR to run a PySpark job using Python 3.4 or 3.6?] (https://aws.amazon.com/premiumsupport/knowledge-center/emr-pyspark-python-3x/)
+* **Troubleshooting Tips: ** The elt.py file is written in python 3.x whereas for Amazon EMR release versions 4.6.0-5.19.0: Python 3.4 is installed on the cluster instances but Python 2.7 is the system default. To solve this issue, please go to [How do I configure Amazon EMR to run a PySpark job using Python 3.4 or 3.6?](https://aws.amazon.com/premiumsupport/knowledge-center/emr-pyspark-python-3x/)
 
 
 ### Understand your ETL pipeline
@@ -185,7 +176,7 @@ We expect to get the dimensional tables are ready in parquet format, which will 
 
 ### Analyze your ETL performance with Spark UI
 
-Step 01: Setup a SSH tunnel. Follow this instructions here [Set Up an SSH Tunnel to the Master Node Using Dynamic Port Forwarding](https://docs.amazonaws.cn/en_us/emr/latest/ManagementGuide/emr-ssh-tunnel.html). Before doing this step, make sure that you have setup your inbound traffic rules properly on your master node. See above for detailed instructions. 
+Step 01: Setup a SSH tunnel. Follow these instructions here [Set Up an SSH Tunnel to the Master Node Using Dynamic Port Forwarding](https://docs.amazonaws.cn/en_us/emr/latest/ManagementGuide/emr-ssh-tunnel.html). Before doing this step, make sure that you have setup your inbound traffic rules properly on your master node. See above for detailed instructions. 
 
 ```
 ssh -i ~/mykeypair.pem -N -D 8157 hadoop@ec2-###-##-##-###.compute-1.amazonaws.com.cn
