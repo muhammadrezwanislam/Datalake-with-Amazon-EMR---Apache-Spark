@@ -21,8 +21,6 @@ The goal of this project is to create an ETL pipeline that extracts data from S3
 
 ## Project Scope
 
-##### &nbsp;
-
 ### Datasets
 For this project, you'll be working with two datasets that reside in S3. Here are the S3 links for each:
 
@@ -52,7 +50,7 @@ The log files in the dataset you'll be working with are partitioned by year and 
 
 Below is an example of what the data in a log file, `2018-11-12-events.json`, looks like.
 
-<img src="Images/log-data-sample.png" width="100%" align="top-left" alt="" title="Log Data Sample" />
+<img src="Images/log-data.png" width="100%" alt="" title="Log Data Sample" />
 
 You can find all the zipped data in the [data folder](data). You might as well extract it to your working
 directory as it will be required in a further step. 
@@ -98,13 +96,12 @@ In this project, we will be using the **dotted red line** : **Processing Engine:
 * **Lake Processing**: Spark 
 
 
-###Project workflow 
+### Project workflow 
 
 The **blue dotted line** represents the scope and workflow of this project.
 
 <img src="Images/focus.png" width="100%" alt="" title="focus" />
 
-##### &nbsp;
 
 ## Project Steps
 
@@ -119,50 +116,47 @@ Pay attention to the Review section and copy down your new **access key ID** and
 AWS_ACCESS_KEY_ID = ******** (change for yours)
 AWS_SECRET_ACCESS_KEY = ******** (change for yours)
 ```
-##### &nbsp;
 
 * ### Create a S3 Bucket 
 Create a S3 Bucket and folder to get and store the processed data from Amazon EMR. Remember, the output folder should be empty. Use the default configuration for the S3 bucket creation process. Once the bucket and folder is created modify the appropriate input_data/output_data in the main function of the `etl.py` script. 
-
-##### &nbsp;
 
 * ### Create an Amazon EC2 Key Pair
 The next step is to create an Amazon Elastic Compute Cloud (Amazon EC2) key pair to connect to the nodes in your cluster over a secure channel using the Secure Shell (SSH) protocol. If you don't have a key pair, follow one of the following procedures depending on your operating system:
 * [Creating Your Key Pair Using Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair) in the Amazon EC2 User Guide for Windows Instances
 * [Creating Your Key Pair Using Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair) in the Amazon EC2 User Guide for Linux Instances. Use this procedure for Mac OS as well.
-##### &nbsp;
 
 * ### Setting up an EMR Cluster in AWS 
 There are several ways to create EMR Cluster: AWS Console, AWS CLI or directly from python. Here we called our cluster `My-cluster`, but you can choose any name you like. Also, remember to use the EC2 key pair you created some steps before. 
 * **Troubleshooting tips:** If you are using windows 10 and Ubuntu - a linux distribution for windows to connect to Amazon EC2 instances using EC2 key pair .prem file, you may get **Permission Denied: public Key** error. To resolve the issue, please read [Connecting to Amazon EC2 Instance on Windows 10 bash - Permission denied (publickey)](https://stackoverflow.com/questions/39038729/connecting-to-amazon-ec2-instance-on-windows-10-bash-permission-denied-public) 
  
 If you need help setting up the cluster, read the [getting started documentation](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-gs.html). 
-If you want to install Amazon EMR using AWS CLI, read the [Create EMR using AWS CLI] (https:://knowledge.udacity.com/questions/239069)
+If you want to install Amazon EMR using AWS CLI, read the [Create EMR using AWS CLI](https:://knowledge.udacity.com/questions/239069)
 
 Here is a look at the cluster setup from AWS Console: 
 
-<img src="images/emr-setup.png" width="100%" alt="" title="Schema" />
+<img src="Images/emr-setup.png" width="100%" alt="" title="Schema" />
 
 The cluster will take around 15 minutes to start. Once it is working, you must copy down your master node's public IP and follow the next step to access it.
-##### &nbsp;
 
 * ### Enable SSH access to your cluster with a Security Group
 Security groups act as virtual firewalls to control inbound and outbound traffic to EMR cluster. Using AWS web-interface, find the security group your `master` node is referring to and grant inbound access from
 your IP at port 22. This is a two step process. 
 
 Step 1: Keep ssh session alive [keep ssh session alive](https://stackoverflow.com/questions/25084288/keep-ssh-session-alive)
-Step 2: Authorize Inbound Traffic [Authorize Inbound Traffic] (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-ssh-prereqs.html). 
-Step 3: Connect to the Master Node Using SSH [Connect to the Master Node Using SSH] (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-ssh.html). Remember to use this following command: 
 
+Step 2: Authorize Inbound Traffic [Authorize Inbound Traffic] (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-ssh-prereqs.html)
+
+Step 3: Connect to the Master Node Using SSH [Connect to the Master Node Using SSH] (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-ssh.html). 
+
+Remember to use this following command: 
 ```
 ssh hadoop@ec2-###-##-##-###.compute-1.amazonaws.com -i ~/mykeypair.pem
 
 ```
 If you are successful, you will get a terminal something like this: 
 
-<img src="Images/ssh-emr.png" width="100%" alt="" title="ssh master node" />
+<img src="Images/ssh-emr.jpg" width="100%" alt="" title="ssh master node" />
 
-##### &nbsp;
 
 ### Run `etl.py` in the cluster
 If you are able to access the cluster, the next step is to run the elt.py. Open another terminal, copy etl.py and dl.cfg from local drive to /home/username. Then copy these files to EMR Master node using these commands with `scp` as below:  
@@ -176,9 +170,8 @@ Make sure that both of the are copied to the master node. Now, in the terminal w
 spark-submit etl.py
 ```
 
-**Troubleshooting Tips: ** The elt.py file is written in python 3.x whereas for Amazon EMR release versions 4.6.0-5.19.0: Python 3.4 is installed on the cluster instances but Python 2.7 is the system default. To solve this issue, please go to [How do I configure Amazon EMR to run a PySpark job using Python 3.4 or 3.6?] (https://aws.amazon.com/premiumsupport/knowledge-center/emr-pyspark-python-3x/)
+* **Troubleshooting Tips: ** The elt.py file is written in python 3.x whereas for Amazon EMR release versions 4.6.0-5.19.0: Python 3.4 is installed on the cluster instances but Python 2.7 is the system default. To solve this issue, please go to [How do I configure Amazon EMR to run a PySpark job using Python 3.4 or 3.6?] (https://aws.amazon.com/premiumsupport/knowledge-center/emr-pyspark-python-3x/)
 
-##### &nbsp;
 
 ### Understand your ETL pipeline
 The script will take around 40 minutes to perform all the operations in it. Here is the summary of how our ETL pipeline works when running `etl.py`:
@@ -189,7 +182,6 @@ The script will take around 40 minutes to perform all the operations in it. Here
 
 We expect to get the dimensional tables are ready in parquet format, which will allow faster computations in the cluster for querying big data.
 
-##### &nbsp;
 
 ### Analyze your ETL performance with Spark UI
 
@@ -198,7 +190,7 @@ Step 01: Setup a SSH tunnel. Follow this instructions here [Set Up an SSH Tunnel
 ```
 ssh -i ~/mykeypair.pem -N -D 8157 hadoop@ec2-###-##-##-###.compute-1.amazonaws.com.cn
 ```
-Step 02: Configure Proxy Settings to View Websites Hosted on the Master Node [ Configure SwitchyOmega for Chrome](Configure Proxy Settings to View Websites Hosted on the Master Node)
+Step 02: Configure Proxy Settings to View Websites Hosted on the Master Node [ Configure SwitchyOmega for Chrome](https://docs.amazonaws.cn/en_us/emr/latest/ManagementGuide/emr-connect-master-node-proxy.html)
 
 Step 03: Go to the Amazon EMR Console, select the appropriate cluster and the from the home page, select **Application User Interfaces** tab. Here you will find a list of user interface URL. Select Spark History Server: 
 
@@ -208,11 +200,10 @@ http://ec2-**.***.***.**.****.compute.amazonaws.com:18080/
 
 Once in the UI, you should be able to see how your EMR cluster ran your ETL script with spark in different nodes, just as in the image below:
 
-![sparkjobs](images/application_history_one.png)
+![sparkjobs](Images/application_history_one.png)
 
-![sparkjobs](images/application_history_two.png)
+![sparkjobs](Images/application_history_two.png)
 
-##### &nbsp;
 
 ### Clean Up Resources
 Congratulations, you just deployed an ETL pipeline with Spark. Remember to delete your S3 bucket and EMR cluster in order to avoid unexpected costs.
@@ -223,18 +214,20 @@ If everything goes smooth, you should get the following folders in your s3 Bucke
 
 <img src="Images/results_one.png" width="100%" alt="" title="output file" />
 
-Also, each of the folder should have .parquet files
+Also, each of the folder should have .parquet files like these: 
 
 <img src="Images/users.png" width="100%" alt="" title="users" />
 <img src="Images/artists.png" width="100%" alt="" title="artists" />
 <img src="Images/time.png" width="100%" alt="" title="time" />
 <img src="Images/songplays.png" width="100%" alt="" title="songplays" />
 <img src="Images/songs.png" width="100%" alt="" title="songs" />
+
+
 ##### &nbsp;
 
 ## Sample Queries 
 
-If you want to run queries to check the tables created, please run [query to test analytics](query.ipynb). Here are two examples of sample queries:
+If you want to run queries to check the tables created, please run [query to test analytics](query.ipynb). Here is one of the sample queries:
 
 * **Query one**
 ```
